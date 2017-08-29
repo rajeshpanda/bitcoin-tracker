@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Bitcoin Tracker
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Your position</ion-label>
+      <ion-input disabled="{{!change}}" [(ngModel)]="currentStake"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Currency</ion-label>
+      <ion-select [(ngModel)]="currency" interface="popover" style="max-width:72% !important" disabled="{{!change}}">
+        <ion-option *ngFor="let c of currencyKeys" [value]="c">{{c}}-{{currencyList[c].name}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <button ion-button *ngIf="!change" style="float:right" (click)="updateValues()">Update</button>
+  <button ion-button *ngIf="change" style="float:right" (click)="saveValues()">Save</button>
+  <br><br><br>
+  <hr>
+  <br>
+  <div *ngIf="resultsDisplay">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Current Coin Value @ {{currency}} {{currentSellRate}}</ion-label>
+        <ion-input readonly="true" [(ngModel)]="currentSellingValue"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>
